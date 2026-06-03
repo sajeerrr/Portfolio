@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Panel - Portfolio Manager">
+    <meta name="author" content="Sajeer F M">
+    <title>Admin Panel - Portfolio Manager</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --color-primary: #e63946;
+            --color-primary-dark: #d1232a;
+            --color-bg-dark: #0a0a0a;
+            --color-bg-secondary: #111111;
+            --color-bg-card: #1a1a1a;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #b0b0b0;
+            --color-border: #2a2a2a;
+            --color-success: #4ade80;
+            --color-danger: #ef4444;
+
+            --font-display: "Space Grotesk", sans-serif;
+            --font-body: "DM Sans", sans-serif;
+
+            --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-box h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--color-bg-dark);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: all var(--transition-fast);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #ff4757;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--color-danger);
+            color: var(--color-danger);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .dashboard-container.show {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .dashboard-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logout-btn {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+
+        .logout-btn:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1.5rem;
+            padding: 2rem;
+        }
+
+        .dashboard-card h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .dashboard-card h2 i {
+            color: var(--color-primary);
+        }
+
+        .dashboard-card p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .stat-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-input label {
+            flex: 1;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .stat-input input {
+            width: 80px;
+            padding: 0.5rem;
+            background: var(--color-bg-dark);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text-primary);
+            font-size: 0.9rem;
+        }
+
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--color-bg-dark);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-btn:hover {
+            background: rgba(230, 57, 70, 0.05);
+            border-color: var(--color-primary);
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 28px;
+            background: #444;
+            border-radius: 14px;
+            position: relative;
+            transition: background var(--transition-fast);
+        }
+
+        .toggle-switch.active {
+            background: var(--color-primary);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left var(--transition-fast);
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        .projects-section {
+            margin-top: 3rem;
+        }
+
+        .projects-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text-primary);
+        }
+
+        .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .project-item {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+
+        .project-item:hover {
+            background: rgba(230, 57, 70, 0.05);
+            border-color: var(--color-primary);
+        }
+
+        .project-name {
+            font-weight: 600;
+        }
+
+        .project-action {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all var(--transition-fast);
+        }
+
+        .project-action:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .project-action.excluded {
+            background: var(--color-danger);
+            border-color: var(--color-danger);
+            color: white;
+        }
+
+        .project-action.excluded:hover {
+            background: #dc2626;
+        }
+
+        .update-btn {
+            padding: 0.875rem 2rem;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-family: var(--font-display);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            margin-top: 1rem;
+        }
+
+        .update-btn:hover {
+            background: #ff4757;
+            transform: translateY(-2px);
+        }
+
+        .success-message {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid var(--color-success);
+            color: var(--color-success);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-text-secondary);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--color-border);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1><i class="fas fa-lock"></i> Admin Access</h1>
+            <p>Enter your admin password to continue</p>
+            
+            <div class="error-message" id="errorMessage"></div>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="password">Admin Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container" id="dashboardContainer">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-sliders-h"></i> Portfolio Admin Panel</h1>
+            <button class="logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <div class="success-message" id="successMessage"></div>
+
+        <!-- Settings Cards -->
+        <div class="dashboard-grid">
+            <!-- Display Stats Card -->
+            <div class="dashboard-card">
+                <h2><i class="fas fa-chart-bar"></i> Display Stats</h2>
+                <p>Configure homepage statistics</p>
+
+                <div class="stat-input">
+                    <label>Repos to Show (0 = auto from GitHub):</label>
+                    <input type="number" id="reposCount" min="0" value="0">
+                </div>
+
+                <div class="stat-input">
+                    <label>Followers to Show (0 = auto from GitHub):</label>
+                    <input type="number" id="followersCount" min="0" value="0">
+                </div>
+
+                <div class="stat-input">
+                    <label>Years of Experience:</label>
+                    <input type="number" id="yearsExp" min="0" value="2">
+                </div>
+
+                <button class="update-btn" onclick="updateStats()">
+                    <i class="fas fa-save"></i> Update Stats
+                </button>
+            </div>
+
+            <!-- Events Toggle Card -->
+            <div class="dashboard-card">
+                <h2><i class="fas fa-calendar-alt"></i> Events Display</h2>
+                <p>Show/Hide Activities & Events section</p>
+
+                <div class="toggle-btn" onclick="toggleEvents()">
+                    <div>
+                        <strong>Activities & Events</strong>
+                        <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin: 0.25rem 0 0 0;">
+                            🏆 AI Hackathon | 🤖 AgenticAI Workshop
+                        </p>
+                    </div>
+                    <div class="toggle-switch" id="eventsToggle"></div>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--color-text-secondary); margin-top: 1rem;">
+                    Status: <strong id="eventsStatus">Hidden</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Projects Management -->
+        <div class="projects-section">
+            <h2><i class="fas fa-tasks"></i> Manage Projects</h2>
+            <p style="color: var(--color-text-secondary); margin-bottom: 1rem;">
+                Select which projects to display on your homepage
+            </p>
+
+            <div class="projects-list" id="projectsList">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading projects...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isAuthenticated = false;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+        });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            const loginBtn = event.target.querySelector('button');
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            try {
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === 'authenticated') {
+                    isAuthenticated = true;
+                    errorDiv.classList.remove('show');
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('dashboardContainer').classList.add('show');
+                    loadDashboard();
+                } else {
+                    errorDiv.textContent = data.message || 'Authentication failed';
+                    errorDiv.classList.add('show');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Login failed: ' + error.message;
+                errorDiv.classList.add('show');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await fetch('/admin/logout', { method: 'POST' });
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+            isAuthenticated = false;
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('dashboardContainer').classList.remove('show');
+            document.getElementById('password').value = '';
+        }
+
+        async function loadDashboard() {
+            if (!isAuthenticated) return;
+
+            try {
+                const response = await fetch('/admin/dashboard');
+                const data = await response.json();
+
+                if (response.status === 401) {
+                    isAuthenticated = false;
+                    document.getElementById('loginContainer').style.display = 'flex';
+                    document.getElementById('dashboardContainer').classList.remove('show');
+                    return;
+                }
+
+                if (data.status === 'ok') {
+                    // Update stats inputs
+                    document.getElementById('reposCount').value = data.display_stats.repos;
+                    document.getElementById('followersCount').value = data.display_stats.followers;
+                    document.getElementById('yearsExp').value = data.display_stats.years_exp;
+
+                    // Update events toggle
+                    const eventsToggle = document.getElementById('eventsToggle');
+                    const eventsStatus = document.getElementById('eventsStatus');
+                    if (data.show_events) {
+                        eventsToggle.classList.add('active');
+                        eventsStatus.textContent = 'Visible';
+                    } else {
+                        eventsToggle.classList.remove('active');
+                        eventsStatus.textContent = 'Hidden';
+                    }
+
+                    // Load projects
+                    loadProjects(data.repos, data.excluded_repos);
+                }
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+            }
+        }
+
+        function loadProjects(repos, excludedRepos) {
+            const projectsList = document.getElementById('projectsList');
+            projectsList.innerHTML = '';
+
+            repos.forEach(repo => {
+                const isExcluded = excludedRepos.includes(repo.name);
+                const item = document.createElement('div');
+                item.className = 'project-item';
+                item.innerHTML = `
+                    <div>
+                        <div class="project-name">${repo.name}</div>
+                        <small style="color: var(--color-text-secondary);">${repo.language || 'N/A'}</small>
+                    </div>
+                    <button class="project-action ${isExcluded ? 'excluded' : ''}" 
+                            onclick="toggleProjectDisplay('${repo.name}')">
+                        ${isExcluded ? '❌ Excluded' : '✓ Show'}
+                    </button>
+                `;
+                projectsList.appendChild(item);
+            });
+        }
+
+        async function toggleProjectDisplay(repoName) {
+            const response = await fetch('/admin/dashboard');
+            const data = await response.json();
+            const isCurrentlyExcluded = data.excluded_repos.includes(repoName);
+
+            const endpoint = isCurrentlyExcluded ? '/admin/projects/include' : '/admin/projects/exclude';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ repo_name: repoName }),
+                });
+
+                if (response.ok) {
+                    showSuccess(`Project ${isCurrentlyExcluded ? 'included' : 'excluded'}`);
+                    loadDashboard();
+                }
+            } catch (error) {
+                console.error('Failed to toggle project:', error);
+            }
+        }
+
+        async function updateStats() {
+            const repos = parseInt(document.getElementById('reposCount').value);
+            const followers = parseInt(document.getElementById('followersCount').value);
+            const yearsExp = parseInt(document.getElementById('yearsExp').value);
+
+            try {
+                const response = await fetch('/admin/settings/stats', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        display_stats: {
+                            repos,
+                            followers,
+                            years_exp: yearsExp,
+                        },
+                    }),
+                });
+
+                if (response.ok) {
+                    showSuccess('Stats updated successfully!');
+                }
+            } catch (error) {
+                console.error('Failed to update stats:', error);
+            }
+        }
+
+        async function toggleEvents() {
+            const toggle = document.getElementById('eventsToggle');
+            const currentState = toggle.classList.contains('active');
+            const newState = !currentState;
+
+            try {
+                const response = await fetch('/admin/settings/events', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ show_events: newState }),
+                });
+
+                if (response.ok) {
+                    if (newState) {
+                        toggle.classList.add('active');
+                        document.getElementById('eventsStatus').textContent = 'Visible';
+                    } else {
+                        toggle.classList.remove('active');
+                        document.getElementById('eventsStatus').textContent = 'Hidden';
+                    }
+                    showSuccess(`Events ${newState ? 'enabled' : 'disabled'}!`);
+                }
+            } catch (error) {
+                console.error('Failed to toggle events:', error);
+            }
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = '✓ ' + message;
+            successDiv.classList.add('show');
+
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

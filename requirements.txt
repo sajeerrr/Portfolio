@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+httpx
+python-dotenv
+apscheduler
+pydantic
+pydantic-settings
+jinja2
+python-dateutil
+cachetools
+rich

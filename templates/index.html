@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sajeer F M — Software Developer specializing in Python, AI, and Backend Development. View my projects, skills, and experience.">
+    <meta name="keywords" content="Sajeer F M, Software Developer, Python, FastAPI, Django, AI, Backend Developer, Portfolio">
+    <meta name="author" content="Sajeer F M">
+    <title>Sajeer F M — Software Developer Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230a0a0a'/%3E%3Cpath d='M14 22 6 32l8 10M50 22l8 10-8 10' fill='none' stroke='%23e63946' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-family='Arial, sans-serif' font-size='18' font-weight='700' fill='%23fff'%3ESF%3C/text%3E%3C/svg%3E">
+
+    <!-- Google Fonts: Space Grotesk (headings) + DM Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Custom Cursor Glow -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo" id="nav-logo">&lt;SF/&gt;</a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <a href="#contact" class="nav-cta" id="nav-cta">Hire Me</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="home" class="hero">
+        <canvas id="particle-canvas" class="particle-canvas"></canvas>
+        <div class="hero-container">
+            <div class="hero-content">
+                <p class="hero-kicker"><i class="fas fa-terminal"></i> Software Developer</p>
+                <h1 class="hero-title">
+                    <span class="hero-line">Building</span>
+                    <span class="hero-line accent">The Future</span>
+                    <span class="hero-line">With Code</span>
+                </h1>
+                <div class="hero-subtitle">
+                    <span id="typewriter" class="typewriter-text"></span>
+                    <span class="typewriter-cursor">|</span>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary" id="btn-view-work">
+                        <i class="fas fa-rocket"></i> View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-outline" id="btn-resume">
+                        <i class="fas fa-download"></i> Download Resume
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <canvas id="neural-canvas" class="neural-canvas"></canvas>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">Who Am I</span>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-avatar-wrapper animate-on-scroll">
+                    <div class="avatar-hexagon">
+                        <img
+                            src="{{ profile.avatar_url or 'https://avatars.githubusercontent.com/u/0' }}"
+                            alt="Sajeer F M"
+                            class="avatar-image"
+                            id="about-avatar"
+                        >
+                    </div>
+                </div>
+                <div class="about-content animate-on-scroll">
+                    <h3 class="about-name">Sajeer F M</h3>
+                    <p class="about-role">Software Developer</p>
+                    <p class="about-bio">
+                        Motivated software developer with expertise in Python, web development,
+                        and databases. Currently pursuing MCA at TKM College of Engineering, Kollam.
+                        Passionate about AI and backend development. I build efficient, scalable
+                        solutions and love exploring new technologies.
+                    </p>
+                    <!-- Admin-controlled content -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SKILLS SECTION ============ -->
+    <section id="skills" class="section skills">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">What I Know</span>
+                <h2 class="section-title">Technical Arsenal</h2>
+            </div>
+            <div class="skills-grid">
+                <!-- Languages -->
+                <div class="skill-card animate-on-scroll" id="skill-languages">
+                    <div class="skill-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="skill-title">Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">PHP</span>
+                    </div>
+                </div>
+                <!-- Web -->
+                <div class="skill-card animate-on-scroll" id="skill-web">
+                    <div class="skill-icon"><i class="fas fa-globe"></i></div>
+                    <h3 class="skill-title">Web</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Bootstrap</span>
+                    </div>
+                </div>
+                <!-- Databases -->
+                <div class="skill-card animate-on-scroll" id="skill-databases">
+                    <div class="skill-icon"><i class="fas fa-database"></i></div>
+                    <h3 class="skill-title">Databases</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+                <!-- Frameworks -->
+                <div class="skill-card animate-on-scroll" id="skill-frameworks">
+                    <div class="skill-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="skill-title">Frameworks</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Streamlit</span>
+                    </div>
+                </div>
+                <!-- Tools -->
+                <div class="skill-card animate-on-scroll" id="skill-tools">
+                    <div class="skill-icon"><i class="fas fa-wrench"></i></div>
+                    <h3 class="skill-title">Tools</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Postman</span>
+                        <span class="skill-tag">Power BI</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Progress Bars -->
+            <div class="skills-progress animate-on-scroll">
+                <h3 class="progress-title">Core Proficiency</h3>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-name">Python</span>
+                        <span class="progress-percent">90%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" data-width="90"></div></div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-name">Django</span>
+                        <span class="progress-percent">80%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-name">JavaScript</span>
+                        <span class="progress-percent">75%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" data-width="75"></div></div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-header">
+                        <span class="progress-name">SQL</span>
+                        <span class="progress-percent">80%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" data-width="80"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROJECTS SECTION ============ -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">My Work</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <span class="github-live-badge">
+                    <span class="live-dot"></span> Live from GitHub
+                </span>
+            </div>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Project cards are rendered dynamically by JavaScript -->
+                <!-- Loading skeletons shown initially -->
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+                <div class="project-skeleton"><div class="skeleton-header"></div><div class="skeleton-body"></div><div class="skeleton-tags"></div><div class="skeleton-footer"></div></div>
+            </div>
+            <div class="projects-footer animate-on-scroll">
+                <button class="btn btn-outline" id="btn-refresh-projects">
+                    <i class="fas fa-sync-alt"></i> Refresh Projects
+                </button>
+                <p class="last-synced" id="last-synced">Last synced: loading...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ EDUCATION SECTION ============ -->
+    <section id="education" class="section education">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">Background</span>
+                <h2 class="section-title">Education & Certifications</h2>
+            </div>
+            <div class="education-content">
+                <!-- Timeline -->
+                <div class="timeline animate-on-scroll">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="timeline-date">2025 – Present</span>
+                            <h3 class="timeline-title">Master of Computer Applications (MCA)</h3>
+                            <p class="timeline-place"><i class="fas fa-university"></i> TKM College of Engineering, Kollam</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="timeline-date">2021 – 2024</span>
+                            <h3 class="timeline-title">B.Sc Computer Science</h3>
+                            <p class="timeline-place"><i class="fas fa-university"></i> University of Kerala, Trivandrum</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Certifications -->
+                <div class="certifications animate-on-scroll">
+                    <h3 class="cert-heading"><i class="fas fa-certificate"></i> Certifications</h3>
+                    <div class="cert-grid">
+                        <div class="cert-card" id="cert-freecodecamp">
+                            <i class="fas fa-award cert-icon"></i>
+                            <span class="cert-name">Web Development</span>
+                            <span class="cert-issuer">FreeCodeCamp</span>
+                        </div>
+                        <div class="cert-card" id="cert-google">
+                            <i class="fas fa-award cert-icon"></i>
+                            <span class="cert-name">Python Developer</span>
+                            <span class="cert-issuer">Google</span>
+                        </div>
+                        <div class="cert-card" id="cert-cisco">
+                            <i class="fas fa-award cert-icon"></i>
+                            <span class="cert-name">Data Science</span>
+                            <span class="cert-issuer">Cisco</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Extracurriculars -->
+                {% if show_events %}
+                <div class="extras animate-on-scroll">
+                    <h3 class="extras-heading"><i class="fas fa-star"></i> Activities & Events</h3>
+                    <div class="extras-tags">
+                        <span class="extra-tag">🏆 AI Hackathon Gnosis, CET — 2026</span>
+                        <span class="extra-tag">🤖 AgenticAI Workshop — 2026</span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT SECTION ============ -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Let's Build Something</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info animate-on-scroll">
+                    <div class="contact-card" id="contact-email">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:sajeerfm93@gmail.com">sajeerfm93@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-card" id="contact-phone">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h4>Phone</h4>
+                            <a href="tel:+916238610619">+91 6238610619</a>
+                        </div>
+                    </div>
+                    <div class="contact-card" id="contact-location">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Tamil Nadu, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://github.com/sajeerrr" target="_blank" class="social-link" id="social-github" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/sajeerfm" target="_blank" class="social-link" id="social-linkedin" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper animate-on-scroll">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="form-name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="form-email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="form-message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="btn-send">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">Built with Python + FastAPI ⚡</p>
+            <p class="footer-copyright">&copy; 2026 Sajeer F M. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span class="toast-message" id="toast-message">Success!</span>
+    </div>
+
+    <!-- Main Script -->
+    <script src="/static/script.js"></script>
+</body>
+</html>
